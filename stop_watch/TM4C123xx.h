@@ -12,6 +12,24 @@
  *********************************************************************************************************************/
  #ifndef TM4C123XX_H
  #define TM4C123XX_H
+
+/******************************************** NVIC SYSTICK Definition  **********************************************/
+
+
+#define NVIC_ST_CTRL_R          (*((volatile u32 *)0xE000E010))
+#define NVIC_ST_RELOAD_R        (*((volatile u32 *)0xE000E014))
+#define NVIC_ST_CURRENT_R       (*((volatile u32 *)0xE000E018))
+
+
+/*****************************************************************************
+*
+* The following are defines for the bit fields in the NVIC_ST_CTRL register.
+*
+******************************************************************************/
+#define NVIC_ST_CTRL_COUNT      0x00010000  /* Count Flag */
+#define NVIC_ST_CTRL_CLK_SRC    0x00000004  /* Clock Source */
+#define NVIC_ST_CTRL_INTEN      0x00000002  /* Interrupt Enable */
+#define NVIC_ST_CTRL_ENABLE     0x00000001 /* Enable */
  
 /******************************************** SC Peripheral Definition  **********************************************/
 

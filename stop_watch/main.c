@@ -1,4 +1,3 @@
-#include "tm4c123gh6ph2.h"
 #include "LIB/Platform_Types.h"
 #include "LIB/Std_Types.h"
 #include "MCAL/GPIO/GPIO_Interface.h"

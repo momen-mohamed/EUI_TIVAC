@@ -7,11 +7,9 @@
 #include "STOP_WATCH.h"
 
 static u32 count = 0;
-static u32 minute = 0;
-static u8 second = 0;
 
-static u8 button1Flag = 0;
-static u8 button2Flag = 0;
+
+
 
 GPIO_PinValue_t value = GPIO_PIN_LOW;
 STOPWATCH_Status currentState = STOP;
@@ -42,6 +40,8 @@ void STOP_WATCH_Init(void)
 
 void STOP_WATCH_Runnable(void)
 {
+    static u8 button1Flag = 0;
+    static u8 button2Flag = 0;
 
     GPIO_PinValue_t firstButtonValue;
     GPIO_PinValue_t secondButtonValue;
@@ -51,7 +51,7 @@ void STOP_WATCH_Runnable(void)
 
     if (firstButtonValue == GPIO_PIN_LOW)
     {
-        if (button1Flag == 0)
+        if (button1Flag == (u8)0)
         {
 
             if (currentState == START)
@@ -64,19 +64,21 @@ void STOP_WATCH_Runnable(void)
                 SysTickEnable();
                 currentState = START;
 
+            }else{
+
             }
 
-            button1Flag = 1;
+            button1Flag = (u8)1;
         }
     }
     else
     {
-        button1Flag = 0;
+        button1Flag = (u8)0;
     }
 
     if (secondButtonValue == GPIO_PIN_LOW)
     {
-        if (button2Flag == 0)
+        if (button2Flag == (u8)0)
         {
 
             if (currentState == STOP)
@@ -88,28 +90,30 @@ void STOP_WATCH_Runnable(void)
                 switch (currentLap)
                 {
                 case LAP1:
-                    printWatchAt(0, 9, count, LAP);
+                    printWatchAt((u8)0, (u8)9, count, LAP);
                     currentLap = LAP2;
                     break;
                 case LAP2:
-                    printWatchAt(1, 0, count, LAP);
+                    printWatchAt((u8)1, (u8)0, count, LAP);
                     currentLap = LAP3;
                     break;
                 case LAP3:
-                    printWatchAt(1, 9, count, LAP);
+                    printWatchAt((u8)1, (u8)9, count, LAP);
                     currentLap = LAP1;
                     break;
                 default:
                     break;
                 }
+            }else{
+
             }
 
-            button2Flag = 1;
+            button2Flag = (u8)1;
         }
     }
     else
     {
-        button2Flag = 0;
+        button2Flag = (u8)0;
     }
     printWatchAt(0, 0, count, COUNT);
 }
@@ -126,8 +130,8 @@ void resetWatch(void)
     LCD_Clear();
     currentLap = LAP1;
     SysTickDisable();
-    SysTickPeriodSet(16000000);
-    count = 0;
+    SysTickPeriodSet((u32)16000000);
+    count = (u32)0;
 }
 
 /* Function: printWatchAt
@@ -141,18 +145,21 @@ void resetWatch(void)
 
 void printWatchAt(u8 line, u8 cell, u32 count, WATCH_type type)
 {
+     u32 minute = 0;
+     u8 second = 0;
+
     LCD_GoTo(line, cell);
     if (type == LAP)
     {
         LCD_WriteString("L:");
     }
-    minute = count / 60;
-    second = count % 60;
-    LCD_WriteNumber(minute / 10);
-    LCD_WriteNumber(minute % 10);
+    minute = count / (u32)60;
+    second = (u8)(count % (u32)60);
+    LCD_WriteNumber((s32)minute / 10);
+    LCD_WriteNumber((s32)minute % 10);
     LCD_WriteString(":");
-    LCD_WriteNumber(second / 10);
-    LCD_WriteNumber(second % 10);
+    LCD_WriteNumber((s32)second / 10);
+    LCD_WriteNumber((s32)second % 10);
 }
 
 
@@ -164,11 +171,11 @@ void printWatchAt(u8 line, u8 cell, u32 count, WATCH_type type)
 
 void printStopWatchEntery(void)
 {
-    LCD_GoTo(0, 1);
+    LCD_GoTo((u8)0, (u8)1);
     LCD_WriteString("**STOP WATCH**");
-    LCD_GoTo(1, 1);
+    LCD_GoTo((u8)1,(u8) 1);
     LCD_WriteString("MOMEN MOHAMED");
-    delay(5000);
+    delay((u32)5000);
     LCD_Clear();
 }
 

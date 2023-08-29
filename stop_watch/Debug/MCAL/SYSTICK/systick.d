@@ -3,7 +3,7 @@
 MCAL/SYSTICK/systick.obj: ../MCAL/SYSTICK/systick.c
 MCAL/SYSTICK/systick.obj: ../LIB/Platform_Types.h
 MCAL/SYSTICK/systick.obj: ../LIB/Std_Types.h
-MCAL/SYSTICK/systick.obj: /Users/mo2a/workspace_v12/stop_watch/tm4c123gh6ph2.h
+MCAL/SYSTICK/systick.obj: /Users/mo2a/Desktop/EUI_TIVAC/stop_watch/TM4C123xx.h
 
 ../MCAL/SYSTICK/systick.c:
 
@@ -11,5 +11,5 @@ MCAL/SYSTICK/systick.obj: /Users/mo2a/workspace_v12/stop_watch/tm4c123gh6ph2.h
 
 ../LIB/Std_Types.h:
 
-/Users/mo2a/workspace_v12/stop_watch/tm4c123gh6ph2.h:
+/Users/mo2a/Desktop/EUI_TIVAC/stop_watch/TM4C123xx.h:
 

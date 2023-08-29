@@ -6,7 +6,7 @@
 
 #include "../../LIB/Platform_Types.h"
 #include "../../LIB/Std_Types.h"
-#include "tm4c123gh6ph2.h"
+#include "TM4C123xx.h"
 
 
 static void (*SysTickISR_ptr)(void);
