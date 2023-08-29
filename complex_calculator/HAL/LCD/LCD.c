@@ -48,7 +48,7 @@ void LCD_Init(void)
 void LCD_WriteString(u8 *str)
 {
     u8 i;
-    for (i = 0; str[i]; i++)
+    for (i = 0; str[i] != 0; i++)
     {
         LCD_WriteChar(str[i]);
     }
@@ -78,7 +78,8 @@ void LCD_WriteChar(u8 character)
 void LCD_WriteNumber(s32 num)
 {
     u8 str[33];
-    u8 rem, i = (u8) 0;
+    s32 rem;
+    u8 index = (u8) 0;
     Sign_type sign = POSITIVE;
     if (num == 0)
     {
@@ -94,19 +95,19 @@ void LCD_WriteNumber(s32 num)
 
     while (num)
     {
-        rem = num % (u8) 10;
-        num /= (u8) 10;
-        str[i] = rem + (u8) '0';
-        i++;
+        rem = num % 10;
+        num /= 10;
+        str[index] = (u8)(rem +'0');
+        index++;
     }
     if (sign)
     {
-        str[i] = '-';
-        i++;
+        str[index] = '-';
+        index++;
     }
-    for (; i > 0; i--)
+    for (; index > (u8)0; index--)
     {
-        LCD_WriteChar(str[i - 1]);
+        LCD_WriteChar(str[index - (u8)1]);
     }
 
 }
@@ -119,9 +120,9 @@ void LCD_WriteNumber(s32 num)
  * Output: None
  */
 
-void LCD_Clear(){
-    LCD_WriteInstruction(0x01);
-    delay(1);
+void LCD_Clear(void){
+    LCD_WriteInstruction((u8)0x01);
+    delay((u32)1);
 }
 
 /*
@@ -139,20 +140,20 @@ void LCD_WriteData(u8 data)
     GPIO_SetPinValue(RS_PORT, RS_PIN, GPIO_PIN_HIGH);
 
     /* Set value for each pin on different ports according to LCD configuration */
-    GPIO_SetPinValue(D0_PORT, DO_PIN, (GPIO_PinValue_t)GET_BIT(data, 0));
-    GPIO_SetPinValue(D1_PORT, D1_PIN, (GPIO_PinValue_t)GET_BIT(data, 1));
-    GPIO_SetPinValue(D2_PORT, D2_PIN, (GPIO_PinValue_t)GET_BIT(data, 2));
-    GPIO_SetPinValue(D3_PORT, D3_PIN, (GPIO_PinValue_t)GET_BIT(data, 3));
-    GPIO_SetPinValue(D4_PORT, D4_PIN, (GPIO_PinValue_t)GET_BIT(data, 4));
-    GPIO_SetPinValue(D5_PORT, D5_PIN, (GPIO_PinValue_t)GET_BIT(data, 5));
-    GPIO_SetPinValue(D6_PORT, D6_PIN, (GPIO_PinValue_t)GET_BIT(data, 6));
-    GPIO_SetPinValue(D7_PORT, D7_PIN, (GPIO_PinValue_t)GET_BIT(data, 7));
+    GPIO_SetPinValue(D0_PORT, DO_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)0));
+    GPIO_SetPinValue(D1_PORT, D1_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)1));
+    GPIO_SetPinValue(D2_PORT, D2_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)2));
+    GPIO_SetPinValue(D3_PORT, D3_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)3));
+    GPIO_SetPinValue(D4_PORT, D4_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)4));
+    GPIO_SetPinValue(D5_PORT, D5_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)5));
+    GPIO_SetPinValue(D6_PORT, D6_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)6));
+    GPIO_SetPinValue(D7_PORT, D7_PIN, (GPIO_PinValue_t)GET_BIT(data, (u8)7));
 
     /* Trigger the enable pin */
     GPIO_SetPinValue(EN_PORT, EN_PIN, GPIO_PIN_HIGH);
-    delay(2);
+    delay((u32)2);
     GPIO_SetPinValue(EN_PORT, EN_PIN, GPIO_PIN_LOW);
-    delay(2);
+    delay((u32)2);
 
 }
 
@@ -167,13 +168,15 @@ void LCD_WriteData(u8 data)
 void LCD_GoTo(u8 line, u8 cell)
 {
 
-    if (line == 0)
+    if (line == (u8)0)
     {
         LCD_WriteInstruction(LINE0_ADD + cell);
     }
-    else if (line == 1)
+    else if (line == (u8)1)
     {
         LCD_WriteInstruction(LINE1_ADD + cell);
+    }else{
+
     }
 }
 
@@ -192,20 +195,20 @@ void LCD_WriteInstruction(u8 instruction)
     GPIO_SetPinValue(RS_PORT, RS_PIN, GPIO_PIN_LOW);
 
     /* Set value for each pin on different ports according to LCD configuration */
-    GPIO_SetPinValue(D0_PORT, DO_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 0));
-    GPIO_SetPinValue(D1_PORT, D1_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 1));
-    GPIO_SetPinValue(D2_PORT, D2_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 2));
-    GPIO_SetPinValue(D3_PORT, D3_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 3));
-    GPIO_SetPinValue(D4_PORT, D4_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 4));
-    GPIO_SetPinValue(D5_PORT, D5_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 5));
-    GPIO_SetPinValue(D6_PORT, D6_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 6));
-    GPIO_SetPinValue(D7_PORT, D7_PIN, (GPIO_PinValue_t)GET_BIT(instruction, 7));
+    GPIO_SetPinValue(D0_PORT, DO_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)0));
+    GPIO_SetPinValue(D1_PORT, D1_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)1));
+    GPIO_SetPinValue(D2_PORT, D2_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)2));
+    GPIO_SetPinValue(D3_PORT, D3_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)3));
+    GPIO_SetPinValue(D4_PORT, D4_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)4));
+    GPIO_SetPinValue(D5_PORT, D5_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)5));
+    GPIO_SetPinValue(D6_PORT, D6_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)6));
+    GPIO_SetPinValue(D7_PORT, D7_PIN, (GPIO_PinValue_t)GET_BIT(instruction, (u8)7));
 
     /* Trigger the enable pin */
 
     GPIO_SetPinValue(EN_PORT, EN_PIN, GPIO_PIN_HIGH);
-    delay(2);
+    delay((u32)2);
     GPIO_SetPinValue(EN_PORT, EN_PIN, GPIO_PIN_LOW);
-    delay(2);
+    delay((u32)2);
 
 }

@@ -312,34 +312,34 @@ void calculate_priority(void)
 
 void calculate(void)
 {
-    u8 i;
+    u8 index;
 
     if (!resultDisplayed)
     {
         result = operands[0];
 
-        for (i = 0; i < operationIndex; i++)
+        for (index = (u8)0; index < operationIndex; index++)
         {
-            switch (operations[i])
+            switch (operations[index])
             {
             case DIV:
-                if (operands[i + 1] == 0)
+                if (operands[index + (u8)1] == 0)
                 {
                     didDivByZero = TRUE;
                 }
                 else
                 {
-                    result /= operands[i + 1];
+                    result /= operands[index + (u8)1];
                 }
                 break;
             case MUL:
-                result *= operands[i + 1];
+                result *= operands[index + (u8)1];
                 break;
             case ADD:
-                result += operands[i + 1];
+                result += operands[index + (u8)1];
                 break;
             case SUB:
-                result -= operands[i + 1];
+                result -= operands[index + (u8)1];
                 break;
             }
         }
@@ -386,11 +386,11 @@ void resetCalculator(void)
  */
 
 void print_Entery(void){
-    LCD_GoTo(0, 3);
+    LCD_GoTo((u8)0, (u8)3);
     LCD_WriteString("CALCULATOR");
-    LCD_GoTo(1, 2);
+    LCD_GoTo((u8)1, (u8)2);
     LCD_WriteString("MOMEN & MAZEN");
-    delay(4000);
+    delay((u32)4000);
     LCD_Clear();
 }
 
@@ -441,7 +441,7 @@ void moveOperationToLast(OPERATION_type *arr, int index, int size)
 
 void swapS32(s32 *p1, s32 *p2)
 {
-    int temp;
+    s32 temp;
     temp = *p1;
     *p1 = *p2;
     *p2 = temp;

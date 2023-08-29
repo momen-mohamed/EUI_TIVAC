@@ -61,7 +61,7 @@ ErrorState_t GPIO_Init(const GPIO_Config_t* Copy_Config,u8 Copy_PinNum)
             else
             {
                 /*Make sure that port clock is enabled*/
-                if(GET_BIT(SYSCTL_RCGCGPIO,Copy_Config[Local_Counter].Port)==0)
+                if(GET_BIT(SYSCTL_RCGCGPIO,Copy_Config[Local_Counter].Port)==(u32)0)
                 {
                     SET_BIT(SYSCTL_RCGCGPIO,Copy_Config[Local_Counter].Port);
                 }
@@ -129,14 +129,14 @@ ErrorState_t GPIO_SetPinValue(GPIO_Port_t Copy_Port,GPIO_Pin_t Copy_Pin,GPIO_Pin
 {
 
     ErrorState_t Local_ErrorState=E_OK;
-    u8 Local_RegNum=1<<Copy_Pin;
+    u8 Local_RegNum=(u8)1<<Copy_Pin;
     if((Copy_Port>GPIO_PORTF) || (Copy_Pin>GPIO_PIN7))
     {
         Local_ErrorState=E_WRONG_OPTION;
     }
     else
     {
-        GPIO_Arr[Copy_Port]->DATA[Local_RegNum]=Copy_PinValue<<Copy_Pin;
+        GPIO_Arr[Copy_Port]->DATA[Local_RegNum]=((u32)Copy_PinValue<<Copy_Pin);
     }
     return Local_ErrorState;
 }
@@ -180,7 +180,7 @@ ErrorState_t GPIO_SetPortValue(GPIO_Port_t Copy_Port,Gpio_PortValue_t Copy_PortV
 ErrorState_t GPIO_GetPinValue(GPIO_Port_t Copy_Port,GPIO_Pin_t Copy_Pin,GPIO_PinValue_t* Copy_PinValue)
 {
     ErrorState_t Local_ErrorState=E_OK;
-    u8 Local_RegNum=1<<Copy_Pin;
+    u8 Local_RegNum=(u8)1<<Copy_Pin;
     if(Copy_PinValue == NULL)
     {
         Local_ErrorState=E_NULL_POINTER;
@@ -224,7 +224,7 @@ ErrorState_t GPIO_GetPortValue(GPIO_Port_t Copy_Port,Gpio_PortValue_t* Copy_Port
         }
         else
         {
-            *Copy_PortValue=GPIO_Arr[Copy_Port]->DATA[GPIO_PORT_DATA];
+            *Copy_PortValue=(Gpio_PortValue_t)(GPIO_Arr[Copy_Port]->DATA[GPIO_PORT_DATA]);
         }
     }
     return Local_ErrorState;

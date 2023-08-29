@@ -3,6 +3,7 @@
 APP/Calculator.obj: ../APP/Calculator.c
 APP/Calculator.obj: ../LIB/Std_Types.h
 APP/Calculator.obj: ../LIB/Platform_Types.h
+APP/Calculator.obj: ../LIB/Platform_Types.h
 APP/Calculator.obj: ../APP/Calculator_Interface.h
 APP/Calculator.obj: ../APP/Calculator_Private.h
 APP/Calculator.obj: ../APP/Calculator_Cfg.h
@@ -13,6 +14,8 @@ APP/Calculator.obj: ../LIB/UTILS.h
 ../APP/Calculator.c:
 
 ../LIB/Std_Types.h:
+
+../LIB/Platform_Types.h:
 
 ../LIB/Platform_Types.h:
 

@@ -16,7 +16,7 @@
 
 
 #define LINE0_ADD ((u8)0x80)
-#define LINE1_ADD ((u8)0x80+0x40)
+#define LINE1_ADD ((u8)0x80+(u8)0x40)
 #define CGRAM_ADDRESS ((u8)0x40)
 
 
